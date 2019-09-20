@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="shortcut icon"  href="assets/img/formulario.png"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
+<title>Calculadora de Parleys</title>
+</head>
+<body>
+
+<section class="container pl-5 pr-5">
+  <div class="row pt-5 pb-4">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12 m-auto text-center">
+      <img src="assets/img/logo.png" style="width: 200px;" class="img-fluid">
+    </div>
+  </div>
+  <form action="#" method="POST" id="formulario">
+  <div class="form-group">
+    <label><h5>La atención del gerente/jefe de piso fue:</h5></label>
+    <select id="gerente" class="form-control form-control-lg" name="selecciones" value="" required autofocus>
+    <option value="Excelente" >Excelente</option>
+    <option value="Bueno" >Bueno</option>
+    <option value="Regular" >Regular</option>
+    <option value="Malo" >Malo</option>
+    <option value="Nulo" >Nulo</option>
+  </select>
+  </div>
+  <div class="form-group">
+    <label><h5>En general, el servicio brindado por el personal del casino es:</h5></label>
+    <select id="servicio" class="form-control form-control-lg" name="selecciones" value="" required autofocus>
+      <option value="Excelente" >Excelente</option>
+      <option value="Bueno" >Bueno</option>
+      <option value="Regular" >Regular</option>
+      <option value="Malo" >Malo</option>
+      <option value="Nulo" >Nulo</option>
+  </select>
+  </div>
+  <div class="form-group">
+    <label><h5>¿Qué mejorarías de Crown City Casino?</h5></label>
+    <textarea id="sugerencia" class="form-control" rows="3" required autofocus></textarea>
+  </div>
+  <div class="form-group">
+    <button id="enviar" type="submit" class="btn btn-primary btn-block btn-lg" name="enviar" >Enviar</button>
+  </div>
+</form>
+</section>
+
+<footer class="bg-dark fixed-bottom p-2 justify-content-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="pull-right hidden-xs">
+            <strong class="text-light">Copyright v1.0 &copy; 2019 <a href="#" class="small">Crown City Casino</a></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
