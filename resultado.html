@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="shortcut icon"  href="assets/img/formulario.png"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
+<link rel="stylesheet" href="assets/css/sdd.css">
+<title>Encuesta de servicio</title>
+</head>
+<body>
+
+<section class="container pl-5 pr-5">
+  <div class="row pt-5 pb-4">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12 m-auto text-center">
+      <img src="assets/img/logo.png" style="width: 200px;" class="img-fluid">
+    </div>
+  </div>
+</section>
+
+<section class="container pl-5 pr-5">
+    <div >
+      <div class="form-group">
+        <label><h5 class="text-center">La atención del gerente/jefe de piso fue:</h5></label>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container pl-5 pr-5">
+      <div >
+        <div class="form-group">
+          <label><h5 class="text-center">En general, el servicio brindado por el personal del casino es:</h5></label>
+          <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+        </div>
+      </div>
+    </section>
+
+<section class="container pl-5 pr-5">
+  <div class="form-group"></div>
+      <label><h5 class="text-center">¿Qué mejorarías de Crown City Casino?</h5></label>
+  </div>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="thead-dark">
+      </thead>
+      <tbody id="contenedorEncuestas">
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="bg-dark fixed-bottom p-2 justify-content-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="pull-right hidden-xs">
+            <strong class="text-light">Copyright v1.0 &copy; 2019 <a href="#" class="small">Crown City Casino</a></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB1iFkAf-f3SVMa4r2kzJLrAd-5HWrOLQQ",
+    authDomain: "cc-encuestas.firebaseapp.com",
+    databaseURL: "https://cc-encuestas.firebaseio.com",
+    projectId: "cc-encuestas",
+    storageBucket: "",
+    messagingSenderId: "383206716423",
+    appId: "1:383206716423:web:f5267c00924ab07aa626a2"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="assets/js/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="assets/js/app2.js"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@
 <link rel="shortcut icon"  href="assets/img/formulario.png"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
-<title>Calculadora de Parleys</title>
+<title>Encuesta de servicio</title>
 </head>
 <body>
 
@@ -21,7 +21,7 @@
     
   <div class="form-group">
     <label><h5>La atención del gerente/jefe de piso fue:</h5></label>
-    <select id="gerente" class="form-control form-control-lg" name="gerente" value="" required autofocus>
+    <select id="gerente" class="form-control form-control-lg" name="gerente" autofocus>
     <option value="Excelente" >Excelente</option>
     <option value="Bueno" >Bueno</option>
     <option value="Regular" >Regular</option>
@@ -31,25 +31,36 @@
   </div>
   <div class="form-group">
     <label><h5>En general, el servicio brindado por el personal del casino es:</h5></label>
-    <select id="servicio" class="form-control form-control-lg" name="servicio" value="" required autofocus>
+    <select id="servicio" class="form-control form-control-lg" name="servicio" >
       <option value="Excelente" >Excelente</option>
       <option value="Bueno" >Bueno</option>
       <option value="Regular" >Regular</option>
       <option value="Malo" >Malo</option>
-      <option value="Nulo" >Nulo</option>
-  </select>
+    </select>
   </div>
+
   <div class="form-group">
     <label><h5>¿Qué mejorarías de Crown City Casino?</h5></label>
-    <textarea id="sugerencia" name="sugerencia" class="form-control" rows="3" required autofocus></textarea>
+    <textarea id="sugerencia" name="sugerencia" class="form-control inputFormu" rows="3" onkeyup="validar()"></textarea>
+    <label id="sugerencia_error" class="small text-danger" style="display:none">*Este campo es requerido</label>
   </div>
-  <div class="form-group">
-    <button id="enviar" type="submit" class="btn btn-primary btn-block btn-lg" name="enviar">Enviar</button>
+  <div class="row mb-5">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+          <div class="row p-2">
+            <!--<div class="col-12 col-lg-6"><button id="limpiar" type="reset" class="btn btn-success btn-block btn-lg " name="limpiar">Limpiar</button></div>-->
+            <input id="enviar" type="submit" value="Listo" disabled class="btn btn-primary btn-block btn-lg mt-2 mt-sm-0" name="enviar" onclick="eventoClick()"></input>
+          </div>
+          <div class="form-group"></div>
+            <label><h5 class="text-center">Encuestas hasta el momento:</h5></label>
+            <h1 class="text-center text-danger" id="demo" style="font-size: 6em;"><strong></strong></h1>
+            <button id="btnmostrar" class="btn btn-danger btn-block btn-lg">Subir resultados</button>
+        </div>            
+      </div>                
   </div>
+</div>
 </form>
 </section>
-
-<button id="btnmostrar" class="btn btn-danger">Subir resultados</button>
 
 <footer class="bg-dark fixed-bottom p-2 justify-content-center">
   <div class="container">
@@ -64,24 +75,14 @@
 </footer>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-firestore.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyB1iFkAf-f3SVMa4r2kzJLrAd-5HWrOLQQ",
-    authDomain: "cc-encuestas.firebaseapp.com",
-    databaseURL: "https://cc-encuestas.firebaseio.com",
-    projectId: "cc-encuestas",
-    storageBucket: "",
-    messagingSenderId: "383206716423",
-    appId: "1:383206716423:web:f5267c00924ab07aa626a2"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
+
+<script src="assets/js/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
