@@ -26,7 +26,6 @@
     <option value="Bueno" >Bueno</option>
     <option value="Regular" >Regular</option>
     <option value="Malo" >Malo</option>
-    <option value="Nulo" >Nulo</option>
   </select>
   </div>
   <div class="form-group">
@@ -53,8 +52,8 @@
           </div>
           <div class="form-group"></div>
             <label><h5 class="text-center">Encuestas hasta el momento:</h5></label>
-            <h1 class="text-center text-danger" id="demo" style="font-size: 6em;"><strong></strong></h1>
-            <button id="btnmostrar" class="btn btn-danger btn-block btn-lg">Subir resultados</button>
+            <h1 class="text-center" id="demo" style="font-size: 6em;"><strong></strong></h1>
+            <button id="btnmostrar" class="btn btn-danger btn-block btn-lg" onclick="subirEncuestas ()">Subir resultados</button>
         </div>            
       </div>                
   </div>
@@ -80,7 +79,20 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-     
+     <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyB1iFkAf-f3SVMa4r2kzJLrAd-5HWrOLQQ",
+        authDomain: "cc-encuestas.firebaseapp.com",
+        databaseURL: "https://cc-encuestas.firebaseio.com",
+        projectId: "cc-encuestas",
+        storageBucket: "",
+        messagingSenderId: "383206716423",
+        appId: "1:383206716423:web:f5267c00924ab07aa626a2"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
 
 <script src="assets/js/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>

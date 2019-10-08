@@ -46,9 +46,37 @@ function obtenerdatos(e) {
       })
       document.getElementById("form").reset();
       document.getElementById("enviar").disabled = true;
+      contarEncuestas();
 }
 
-var btnMostrar = document.getElementById('btnmostrar');
+function subirEncuestas (){
+    Swal.fire({
+        title: '¿Estás seguro de subir los resultados?',
+        text: "¡Recuerda tener mínimo 125 encuestas!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, subirlo!'
+      }).then((result) => {
+        if (result.value) {
+            subirEncuestasTodo();
+            
+            localStorage.removeItem("registros");
+            contarEncuestas();
+            Swal.fire(
+                'Hecho!',
+                'Tu encuesta ha sido subida.',
+                'success'
+              )
+            
+        }
+      })
+      
+}
+
+
+/*var btnMostrar = document.getElementById('btnmostrar');
 btnMostrar.addEventListener('click', function(e){
     e.preventDefault();
 
@@ -91,7 +119,7 @@ btnMostrar.addEventListener('click', function(e){
     
 });
 
-async function subirEncuestas (encuesta) {
+async function subirEncuestas2 (encuesta) {
 
     var db = firebase.firestore();
     encuesta.forEach(element => {
@@ -108,13 +136,27 @@ async function subirEncuestas (encuesta) {
         })
         .catch(err => console.log('error'));
     });
-    
+};*/
 
-};
+var db = firebase.firestore();
+function subirEncuestasTodo () {
+
+    var registros = JSON.parse(localStorage.getItem("registros"));
+    registros.forEach(element => {
+
+        db.collection("encuestas").add({
+            gerente: element.gerente,
+            servicio: element.servicio,
+            sugerencia: element.sugerencia,
+            fecha: element.fecha
+        })
+    })
+}
+
+
 
   var eventoClick = function() {
     contarEncuestas(1);
-    
   }
 
   function contarEncuestas(clic=0) {

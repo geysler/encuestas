@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', listeners);
 
 function listeners() {
     //obtenerCampo ();
-    obtenerCampoGerente ();
+    //obtenerCampoGerente ();
     //obtenerCampoServicio ();
     obtenerEncuestas();
     obtenerGraficaGerente();
@@ -15,7 +15,7 @@ function listeners() {
 function obtenerEncuestas() {
     var db = firebase.firestore();
     //leer documentos
-    db.collection("encuestas").onSnapshot((querySnapshot) => {
+    db.collection("encuestas").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             const contenedor = document.getElementById('contenedorEncuestas');
             contenedor.innerHTML += `
@@ -26,12 +26,12 @@ function obtenerEncuestas() {
     });
 }
 
-    var db = firebase.firestore();
+    /*var db = firebase.firestore();
     db.collection("encuestas").where('servicio', '==','Excelente').get().then((querySnapshot) => {
         console.log(querySnapshot._snapshot.docChanges.length);
     });
 
-/*function obtenerCampoServicio (){
+function obtenerCampoServicio (){
     var db = firebase.firestore();
     db.collection("encuestas").where('servicio', '==','Excelente').get().then((querySnapshot) => {
         var counterServicio1 = querySnapshot._snapshot.docChanges.length;
