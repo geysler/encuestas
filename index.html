@@ -50,15 +50,24 @@
             <!--<div class="col-12 col-lg-6"><button id="limpiar" type="reset" class="btn btn-success btn-block btn-lg " name="limpiar">Limpiar</button></div>-->
             <input id="enviar" type="submit" value="Listo" disabled class="btn btn-primary btn-block btn-lg mt-2 mt-sm-0" name="enviar" onclick="eventoClick()"></input>
           </div>
-          <div class="form-group"></div>
-            <label><h5 class="text-center">Encuestas hasta el momento:</h5></label>
-            <h1 class="text-center" id="demo" style="font-size: 6em;"><strong></strong></h1>
-            <button id="btnmostrar" class="btn btn-danger btn-block btn-lg" onclick="subirEncuestas ()">Subir resultados</button>
-        </div>            
       </div>                
   </div>
 </div>
 </form>
+<div class="row mb-5">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="form-group">
+            <label><h5 class="text-center">Encuestas hasta el momento:</h5></label>
+            <h1 class="text-center" id="demo" style="font-size: 6em;"><strong></strong></h1>
+            <button id="btnmostrar" class="btn btn-danger btn-block btn-lg" onclick="subirEncuestas ()">Subir resultados</button>
+        </div>
+        <div class="form-group">
+            <label><h5 class="text-center">Encuestas totales subidas:</h5></label>
+            <h1 class="text-center" id="TotalID" style="font-size: 6em;"><strong></strong></h1>
+        </div>
+      </div>
+    </div>
 </section>
 
 <footer class="bg-dark fixed-bottom p-2 justify-content-center">

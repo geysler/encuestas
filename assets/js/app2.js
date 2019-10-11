@@ -4,12 +4,21 @@
 window.addEventListener('DOMContentLoaded', listeners);
 
 function listeners() {
-    //obtenerCampo ();
-    //obtenerCampoGerente ();
-    //obtenerCampoServicio ();
+    obtenerCampoServicio ();
+    obtenerTotal();
     obtenerEncuestas();
     obtenerGraficaGerente();
     obtenerGraficaServicio();
+}
+
+function obtenerTotal() {
+    var db = firebase.firestore();
+    db.collection("encuestas").get().then(function(querySnapshot) {
+        var TotalID = querySnapshot.size;
+        document.getElementById("TotalID").innerHTML = TotalID;
+        document.getElementById("TotalID2").innerHTML = TotalID;
+        document.getElementById("TotalID3").innerHTML = TotalID; 
+    });
 }
 
 function obtenerEncuestas() {
@@ -25,6 +34,58 @@ function obtenerEncuestas() {
         });
     });
 }
+
+async function obtenerCampoGerente() {
+    
+    var db = firebase.firestore();
+    var data = [];
+
+    db.collection("encuestas").where('gerente', '==','Excelente').get().then(async (querySnapshot) => {
+        const counterGerente1 = await querySnapshot.size;
+        data.push({'resultado': counterGerente1});
+    });
+    
+    db.collection("encuestas").where('gerente', '==','Bueno').get().then(async (querySnapshot) => {
+        const counterGerente2 = await querySnapshot.size;
+        data.push({'resultado': counterGerente2});
+    });
+
+    db.collection("encuestas").where('gerente', '==','Regular').get().then(async (querySnapshot) => {
+        const counterGerente3 = await querySnapshot.size;
+        data.push({'resultado': counterGerente3});
+    });
+
+    db.collection("encuestas").where('gerente', '==','Malo').get().then(async (querySnapshot) => {
+        const counterGerente4 = await querySnapshot.size;
+        data.push({'resultado': counterGerente4});
+    });
+
+    return data;
+}
+
+function obtenerCampoServicio (){
+    var db = firebase.firestore();
+    db.collection("encuestas").where('servicio', '==','Excelente').get().then((querySnapshot) => {
+        var counterServicio1 = querySnapshot.size;
+        //console.log(counterServicio1);
+    });
+    var db = firebase.firestore();
+    db.collection("encuestas").where('servicio', '==','Bueno').get().then((querySnapshot) => {
+        var counterServicio2 = querySnapshot.size;
+        //console.log(counterServicio2);
+    });
+    var db = firebase.firestore();
+    db.collection("encuestas").where('servicio', '==','Regular').get().then((querySnapshot) => {
+        var counterServicio3 = querySnapshot.size;
+        //console.log(counterServicio3);
+    });
+    var db = firebase.firestore();
+    db.collection("encuestas").where('servicio', '==','Malo').get().then((querySnapshot) => {
+        var counterServicio4 = querySnapshot.size;
+        //console.log(counterServicio4);
+    });
+}
+
 
     /*var db = firebase.firestore();
     db.collection("encuestas").where('servicio', '==','Excelente').get().then((querySnapshot) => {
@@ -52,19 +113,11 @@ function obtenerCampoServicio (){
         var counterServicio4 = querySnapshot._snapshot.docChanges.length;
         console.log(counterServicio4);
     });
-}
+}*/
 
-function obtenerCampo (){
-    var db = firebase.firestore();
-    db.collection("encuestas").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            var un_array = `${doc.data().id}`;
-            console.log(un_array.length+1);
-        });
-    });
-}
 
-    var gerenteSelect = "Bueno";
+
+    /*var gerenteSelect = "Bueno";
     var servicioSelect = "Bueno";
 
     var data = {
@@ -217,30 +270,32 @@ function obtenerCampo (){
     }
     }
     console.log(counterServicio4);*/
-    
-    function obtenerGraficaGerente() {
+
+    async function obtenerGraficaGerente() {
         google.charts.load('current', {'packages':['corechart']});
-              google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart);
+        const datos = await obtenerCampoGerente();
         
-              function drawChart() {
-        
-                var data = google.visualization.arrayToDataTable([
-                  ['Task', 'Hours per Day'],
-                  ['Exelente',     2],
-                  ['Bueno',      2],
-                  ['Regular',  5],
-                  ['Malo', 5]
-                ]);
-        
-                var options = {
-                  title: ''
-                };
-        
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        
-                chart.draw(data, options);
-              }
+        console.log(datos);
+
+        function drawChart() {   
+         
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Exelente',     1],
+                ['Bueno',      1],
+                ['Regular',  1],
+                ['Malo', 1]
+            ]);
+    
+            var options = {
+                title: ''
+            };
+    
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
             }
+        }
         
             function obtenerGraficaServicio(){
               google.charts.load("current", {packages:["corechart"]});
@@ -248,9 +303,9 @@ function obtenerCampo (){
               function drawChart2() {
                 var data = google.visualization.arrayToDataTable([
                   ['Task', 'Hours per Day'],
-                  ['Exelente',     1],
-                  ['Bueno',      1],
-                  ['Regular',  1],
+                  ['Exelente',     3],
+                  ['Bueno',      3],
+                  ['Regular',  3],
                   ['Malo', 1]
                 ]);
         

@@ -1,11 +1,10 @@
 var btnEnviar = document.getElementById('enviar');
 btnEnviar.addEventListener('click', obtenerdatos);
-
+    obtenerTotal();
 if (localStorage.getItem("registros") != null ) {
     contarEncuestas();
 }
-
-
+//Obtener Datos
 function obtenerdatos(e) {
     e.preventDefault();
     
@@ -14,7 +13,6 @@ function obtenerdatos(e) {
     
     var servicio = document.getElementById('servicio');
     var servicioSelect = servicio.options[servicio.selectedIndex].value;
-    
     var sugerencia = document.getElementById('sugerencia').value;
     
     var f = new Date();
@@ -24,7 +22,8 @@ function obtenerdatos(e) {
         gerente: gerenteSelect,
         servicio: servicioSelect,
         sugerencia: sugerencia,
-        fecha: fecha
+        fecha: fecha,
+        sala: salac
     };
 
     if (localStorage.getItem("registros") === null ) {
@@ -33,7 +32,7 @@ function obtenerdatos(e) {
     } else {
         var registros = JSON.parse(localStorage.getItem("registros"));
     }
-
+//Guardar Local Storage
     registros.push(data);
     localStorage.setItem("registros",JSON.stringify(registros));
     
@@ -48,38 +47,20 @@ function obtenerdatos(e) {
       document.getElementById("enviar").disabled = true;
       contarEncuestas();
 }
+//Subo encuestas Firebase
 
 function subirEncuestas (){
-    Swal.fire({
-        title: '¿Estás seguro de subir los resultados?',
-        text: "¡Recuerda tener mínimo 125 encuestas!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, subirlo!'
-      }).then((result) => {
-        if (result.value) {
-            subirEncuestasTodo();
-            
-            localStorage.removeItem("registros");
-            contarEncuestas();
-            Swal.fire(
-                'Hecho!',
-                'Tu encuesta ha sido subida.',
-                'success'
-              )
-            
-        }
-      })
-      
-}
 
+    if (localStorage.getItem("registros") === null ) {
 
-/*var btnMostrar = document.getElementById('btnmostrar');
-btnMostrar.addEventListener('click', function(e){
-    e.preventDefault();
-
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Ninguna encuesta guardada!',
+            footer: ''
+          })
+          
+    } else{
         Swal.fire({
             title: '¿Estás seguro de subir los resultados?',
             text: "¡Recuerda tener mínimo 125 encuestas!",
@@ -90,54 +71,21 @@ btnMostrar.addEventListener('click', function(e){
             confirmButtonText: 'Sí, subirlo!'
           }).then((result) => {
             if (result.value) {
-                var data = localStorage.getItem("registros");
-                var encuesta = JSON.parse(data);
-                subirEncuestas(encuesta)
-                .then(function(){
-                    console.log('si');
-                    localStorage.removeItem("registros");
-                    contarEncuestas();
-                    Swal.fire(
-                        'Hecho!',
-                        'Tu encuesta ha sido subida.',
-                        'success'
-                      )
-                })
-                .catch(error => {
-                    console.log('no');
-                    Swal.fire(
-                        'Oops!',
-                        'Error al subir las encuestas.',
-                        'error'
-                    );
-                })
-              
+                subirEncuestasTodo();
+                
+                localStorage.removeItem("registros");
+                contarEncuestas();
+                obtenerTotal();
+                Swal.fire(
+                    'Hecho!',
+                    'Tu encuesta ha sido subida.',
+                    'success'
+                  )
             }
           })
-    
-    .catch(err => console.log(err));
-    
-});
-
-async function subirEncuestas2 (encuesta) {
-
-    var db = firebase.firestore();
-    encuesta.forEach(element => {
-
-    db.collection("encuestas").add({
-            gerente: element.gerente,
-            servicio: element.servicio,
-            sugerencia: element.sugerencia,
-            fecha: element.fecha
-        })
-        .then(res => {
-            console.log(res._key.path.segments[1]);
-            promesa.push(res._key.path.segments[1]);
-        })
-        .catch(err => console.log('error'));
-    });
-};*/
-
+    }
+}
+//Sube todas las encuestas
 var db = firebase.firestore();
 function subirEncuestasTodo () {
 
@@ -148,13 +96,12 @@ function subirEncuestasTodo () {
             gerente: element.gerente,
             servicio: element.servicio,
             sugerencia: element.sugerencia,
-            fecha: element.fecha
+            fecha: element.fecha,
+            sala: element.sala
         })
     })
 }
-
-
-
+//Contar encuestas
   var eventoClick = function() {
     contarEncuestas(1);
   }
@@ -170,7 +117,7 @@ function subirEncuestasTodo () {
     }
     
   }
-
+//Valida Boton para guardar
   function validar(){
     var validado = true;
     elementos = document.getElementsByClassName("inputFormu");
@@ -186,4 +133,79 @@ function subirEncuestasTodo () {
        document.getElementById("enviar").disabled = true;   
     }
   }
+//Total encuestas en Firebase
+  function obtenerTotal() {
+    var db = firebase.firestore();
+    db.collection("encuestas").get().then(function(querySnapshot) {
+        var TotalID = querySnapshot.size;
+        document.getElementById("TotalID").innerHTML = TotalID;
+    });
+}
 
+function getAllUrlParams(url) {
+
+  // get query string from url (optional) or window
+  var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+
+  // we'll store the parameters here
+  var obj = {};
+
+  // if query string exists
+  if (queryString) {
+
+    // stuff after # is not part of query string, so get rid of it
+    queryString = queryString.split('#')[0];
+
+    // split our query string into its component parts
+    var arr = queryString.split('&');
+
+    for (var i = 0; i < arr.length; i++) {
+      // separate the keys and the values
+      var a = arr[i].split('=');
+
+      // set parameter name and value (use 'true' if empty)
+      var paramName = a[0];
+      var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
+
+      // (optional) keep case consistent
+      paramName = paramName.toLowerCase();
+      if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+
+      // if the paramName ends with square brackets, e.g. colors[] or colors[2]
+      if (paramName.match(/\[(\d+)?\]$/)) {
+
+        // create key if it doesn't exist
+        var key = paramName.replace(/\[(\d+)?\]/, '');
+        if (!obj[key]) obj[key] = [];
+
+        // if it's an indexed array e.g. colors[2]
+        if (paramName.match(/\[\d+\]$/)) {
+          // get the index value and add the entry at the appropriate position
+          var index = /\[(\d+)\]/.exec(paramName)[1];
+          obj[key][index] = paramValue;
+        } else {
+          // otherwise add the value to the end of the array
+          obj[key].push(paramValue);
+        }
+      } else {
+        // we're dealing with a string
+        if (!obj[paramName]) {
+          // if it doesn't exist, create property
+          obj[paramName] = paramValue;
+        } else if (obj[paramName] && typeof obj[paramName] === 'string'){
+          // if property does exist and it's a string, convert it to an array
+          obj[paramName] = [obj[paramName]];
+          obj[paramName].push(paramValue);
+        } else {
+          // otherwise add the property
+          obj[paramName].push(paramValue);
+        }
+      }
+    }
+  }
+
+  return obj;
+}
+
+var salac = getAllUrlParams().sala;
+console.log(salac);
