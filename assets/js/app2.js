@@ -274,9 +274,7 @@ function obtenerCampoServicio (){
     async function obtenerGraficaGerente() {
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
-        const datos = await obtenerCampoGerente();
-        
-        console.log(datos);
+        const datos = await obtenerCampoGerente()
 
         function drawChart() {   
          

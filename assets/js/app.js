@@ -85,6 +85,7 @@ function subirEncuestas (){
           })
     }
 }
+
 //Sube todas las encuestas
 var db = firebase.firestore();
 function subirEncuestasTodo () {
@@ -92,7 +93,8 @@ function subirEncuestasTodo () {
     var registros = JSON.parse(localStorage.getItem("registros"));
     registros.forEach(element => {
 
-        db.collection("encuestas").add({
+        
+        db.collection(EncuestaSala).add({
             gerente: element.gerente,
             servicio: element.servicio,
             sugerencia: element.sugerencia,
@@ -101,6 +103,7 @@ function subirEncuestasTodo () {
         })
     })
 }
+
 //Contar encuestas
   var eventoClick = function() {
     contarEncuestas(1);
@@ -141,6 +144,13 @@ function subirEncuestasTodo () {
         document.getElementById("TotalID").innerHTML = TotalID;
     });
 }
+/* function obtenerTotal() {
+    var db = firebase.firestore();
+    db.collection("encuestas").where('sala', '==', 'aguascalientes').get().then(function(querySnapshot) {
+        var TotalID = querySnapshot.size;
+        document.getElementById("TotalID").innerHTML = TotalID;
+    });
+}*/
 
 function getAllUrlParams(url) {
 
@@ -208,4 +218,5 @@ function getAllUrlParams(url) {
 }
 
 var salac = getAllUrlParams().sala;
-console.log(salac);
+var EncuestaSala = `encuestas_${salac}`
+console.log(EncuestaSala);
