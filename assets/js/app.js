@@ -1,9 +1,13 @@
 var btnEnviar = document.getElementById('enviar');
 btnEnviar.addEventListener('click', obtenerdatos);
     obtenerTotal();
-if (localStorage.getItem("registros") != null ) {
+
+    var salac = getAllUrlParams().sala;
+    var EncuestaSala = `encuestas_${salac}`;
+    
+  if (localStorage.getItem(`encuestas_${salac}`) != null ) {
     contarEncuestas();
-}
+  }
 //Obtener Datos
 function obtenerdatos(e) {
     e.preventDefault();
@@ -26,15 +30,16 @@ function obtenerdatos(e) {
         sala: salac
     };
 
-    if (localStorage.getItem("registros") === null ) {
+    if (localStorage.getItem(`encuestas_${salac}`) === null ) {
         var registros = [];
 
     } else {
-        var registros = JSON.parse(localStorage.getItem("registros"));
+        var registros = JSON.parse(localStorage.getItem(`encuestas_${salac}`));
     }
+
 //Guardar Local Storage
     registros.push(data);
-    localStorage.setItem("registros",JSON.stringify(registros));
+    localStorage.setItem(`encuestas_${salac}`,JSON.stringify(registros));
     
     Swal.fire({
         position: 'top-end',
@@ -47,11 +52,11 @@ function obtenerdatos(e) {
       document.getElementById("enviar").disabled = true;
       contarEncuestas();
 }
-//Subo encuestas Firebase
 
+//Subo encuestas Firebase
 function subirEncuestas (){
 
-    if (localStorage.getItem("registros") === null ) {
+    if (localStorage.getItem(`encuestas_${salac}`) === null ) {
 
         Swal.fire({
             type: 'error',
@@ -73,7 +78,7 @@ function subirEncuestas (){
             if (result.value) {
                 subirEncuestasTodo();
                 
-                localStorage.removeItem("registros");
+                localStorage.removeItem(`encuestas_${salac}`);
                 contarEncuestas();
                 obtenerTotal();
                 Swal.fire(
@@ -90,7 +95,7 @@ function subirEncuestas (){
 var db = firebase.firestore();
 function subirEncuestasTodo () {
 
-    var registros = JSON.parse(localStorage.getItem("registros"));
+    var registros = JSON.parse(localStorage.getItem(`encuestas_${salac}`));
     registros.forEach(element => {
 
         
@@ -111,8 +116,8 @@ function subirEncuestasTodo () {
 
   function contarEncuestas(clic=0) {
 
-    if (localStorage.getItem("registros") != null) {
-        var un_array = JSON.parse(localStorage.getItem("registros"));
+    if (localStorage.getItem(`encuestas_${salac}`) != null) {
+        var un_array = JSON.parse(localStorage.getItem(`encuestas_${salac}`));
         var cont = un_array.length+clic;
         document.getElementById("demo").innerHTML = cont;
     } else {
@@ -120,6 +125,7 @@ function subirEncuestasTodo () {
     }
     
   }
+
 //Valida Boton para guardar
   function validar(){
     var validado = true;
@@ -136,21 +142,17 @@ function subirEncuestasTodo () {
        document.getElementById("enviar").disabled = true;   
     }
   }
-//Total encuestas en Firebase
+  //Total de encuestas
   function obtenerTotal() {
     var db = firebase.firestore();
-    db.collection("encuestas").get().then(function(querySnapshot) {
+    var salac = getAllUrlParams().sala;
+    var EncuestaSala = `encuestas_${salac}`
+
+    db.collection(EncuestaSala).get().then(function(querySnapshot) {
         var TotalID = querySnapshot.size;
         document.getElementById("TotalID").innerHTML = TotalID;
     });
-}
-/* function obtenerTotal() {
-    var db = firebase.firestore();
-    db.collection("encuestas").where('sala', '==', 'aguascalientes').get().then(function(querySnapshot) {
-        var TotalID = querySnapshot.size;
-        document.getElementById("TotalID").innerHTML = TotalID;
-    });
-}*/
+  }
 
 function getAllUrlParams(url) {
 
@@ -219,4 +221,3 @@ function getAllUrlParams(url) {
 
 var salac = getAllUrlParams().sala;
 var EncuestaSala = `encuestas_${salac}`
-console.log(EncuestaSala);
